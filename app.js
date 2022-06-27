@@ -34,6 +34,7 @@ console.log(ordinalScale("good"));
 
 // Read JSON
 d3.json("data/data.json", function (data) {
+  console.log("### Read Data");
   console.log(data);
 });
 
@@ -53,6 +54,7 @@ d3.json("data/data.json", function (data) {
   let min = d3.min(data, function (d) {
     return d.age;
   });
+  console.log("### Min Value");
   console.log(min);
 });
 
@@ -61,9 +63,18 @@ d3.json("data/data.json", function (data) {
   let extent = d3.extent(data, function (d) {
     return d.age;
   });
+  console.log("### Extent array");
   console.log(extent);
 
   // add in linear scale
   let scale = d3.scaleLinear().domain(extent).range([0, 100]).clamp(true);
+  console.log("### Linear Scale based on Extent array");
   console.log(scale(35));
+
+  // get unique set value
+  let ages = d3.set(data, function (d) {
+    return d.age;
+  });
+  console.log("### Set");
+  console.log(ages.values());
 });
