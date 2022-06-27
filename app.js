@@ -46,3 +46,24 @@ d3.csv("data/data.csv", function (data) {
 d3.tsv("data/data.tsv", function (data) {
   console.log(data);
 });
+
+// Data manipulation
+// Min
+d3.json("data/data.json", function (data) {
+  let min = d3.min(data, function (d) {
+    return d.age;
+  });
+  console.log(min);
+});
+
+// Extent
+d3.json("data/data.json", function (data) {
+  let extent = d3.extent(data, function (d) {
+    return d.age;
+  });
+  console.log(extent);
+
+  // add in linear scale
+  let scale = d3.scaleLinear().domain(extent).range([0, 100]).clamp(true);
+  console.log(scale(35));
+});
