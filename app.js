@@ -31,3 +31,18 @@ let ordinalScale = d3
   .range(["red", "black", "beige"]);
 console.log("### Ordinal Scale");
 console.log(ordinalScale("good"));
+
+// Read JSON
+d3.json("data/data.json", function (data) {
+  console.log(data);
+});
+
+// Read CSV
+d3.csv("data/data.csv", function (data) {
+  console.log(data);
+});
+
+// Read TSV
+d3.csv("data/data.tsv", function (data) {
+  console.log(data);
+});
