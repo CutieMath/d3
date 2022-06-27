@@ -43,6 +43,6 @@ d3.csv("data/data.csv", function (data) {
 });
 
 // Read TSV
-d3.csv("data/data.tsv", function (data) {
+d3.tsv("data/data.tsv", function (data) {
   console.log(data);
 });
