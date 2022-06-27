@@ -13,3 +13,13 @@ let timeScale = d3
   .range([0, 100]);
 console.log("Time Scale");
 console.log(timeScale(new Date(2022, 5, 27)));
+
+// Quantize Scale
+let quantizeScale = d3
+  .scaleQuantize()
+  .domain([0, 100])
+  .range(["yellow", "green"]);
+console.log("Quantize Scale");
+console.log(quantizeScale(90));
+console.log(quantizeScale(49));
+console.log(quantizeScale(12));
