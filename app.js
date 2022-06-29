@@ -1,3 +1,10 @@
+// Selection
+let div = d3.select("div");
+console.log(div.nodes());
+
+let divLinks = div.selectAll("a");
+console.log(divLinks.nodes());
+
 // Linear Scale
 let linearScale = d3.scaleLinear().domain([0, 100]).range([0, 600]).clamp(true);
 console.log("Linear Scale");
