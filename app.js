@@ -5,6 +5,14 @@ console.log(div.nodes());
 let divLinks = div.selectAll("a");
 console.log(divLinks.nodes());
 
+// modify a doc
+let secondLink = d3
+  .selectAll("a:nth-child(2)")
+  .attr("href", "https://google.com")
+  .style("color", "green")
+  .text("Just changed text");
+console.log(secondLink.attr("href"));
+
 // Linear Scale
 let linearScale = d3.scaleLinear().domain([0, 100]).range([0, 600]).clamp(true);
 console.log("Linear Scale");
