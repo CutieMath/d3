@@ -6,31 +6,43 @@ let scores = [
   { name: "Byron", score: 100 },
 ];
 
-let update = d3
-  .select(".chart")
-  .selectAll("div")
-  .data(scores, function (d) {
-    return d ? d.name : this.innerText; //Check if the element already exists
-  })
-  .style("color", "blue");
+// let update = d3
+//   .select(".chart")
+//   .selectAll("div")
+//   .data(scores, function (d) {
+//     return d ? d.name : this.innerText; //Check if the element already exists
+//   })
+//   .style("color", "blue");
 
-let enter = update
+// let enter = update
+//   .enter()
+//   .append("div")
+//   .text(function (d) {
+//     return d.name;
+//   })
+//   .style("color", "green");
+
+// // remove redundent data
+// update.exit().remove();
+// // styling
+// update
+//   .merge(enter)
+//   .style("width", (d) => d.score + "px")
+//   .style("height", "50px")
+//   .style("background", "pink")
+//   .style("border", "1px solid black");
+
+// with svg
+d3.select(".chart")
+  .selectAll("div")
+  .data(scores)
   .enter()
   .append("div")
   .text(function (d) {
     return d.name;
   })
-  .style("color", "green");
-
-// remove redundent data
-update.exit().remove();
-// styling
-update
-  .merge(enter)
   .style("width", (d) => d.score + "px")
-  .style("height", "50px")
-  .style("background", "pink")
-  .style("border", "1px solid black");
+  .attr("class", "bar");
 
 // Selection
 let div = d3.select("div");
