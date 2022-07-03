@@ -1,5 +1,5 @@
 // 3rd June
-let margin = { top: 25, right: 0, bottom: 25, left: 25 };
+let margin = { top: 30, right: 30, bottom: 30, left: 30 };
 let width = 425 - margin.left - margin.right;
 let height = 625 - margin.top - margin.bottom;
 
@@ -25,6 +25,11 @@ svg
   .attr("height", height)
   .style("fill", "pink")
   .style("stroke", "black");
+
+// Create axis
+let yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
+let yAxis = d3.axisLeft(yScale);
+svg.call(yAxis);
 
 // let scores = [
 //   { name: "Yuxin", score: 100 },
