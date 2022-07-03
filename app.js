@@ -44,16 +44,26 @@ var bar = d3
   .append("g")
   .attr("transform", (d, i) => "translate(0, " + i * 33 + ")");
 
+function scaleBar(selection, scale) {
+  selection.style("transform", "scaleX(" + scale + ")");
+}
+
+function fade(selection, opacity) {
+  selection.style("fill-opacity", opacity);
+}
+
 bar
   .append("rect")
   .style("width", (d) => d.score)
   .attr("fill", "pink")
   .attr("class", "bar")
-  .on("mouseover", function () {
-    d3.select(this).classed("barOn", true);
+  .on("mouseover", function (d, i, elements) {
+    d3.select(this).call(scaleBar, 2);
+    d3.selectAll(elements).filter(":not(:hover)").call(fade, 0.5);
   })
-  .on("mouseout", function () {
-    d3.select(this).classed("barOn", false);
+  .on("mouseout", function (d, i, elements) {
+    d3.select(this).call(scaleBar, 1);
+    d3.selectAll(elements).call(fade, 1);
   });
 
 bar
