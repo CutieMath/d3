@@ -33,16 +33,30 @@ let scores = [
 //   .style("border", "1px solid black");
 
 // with svg
-d3.select(".chart")
-  .selectAll("div")
+var bar = d3
+  .select(".chart")
+  .append("svg")
+  .attr("width", 225)
+  .attr("height", 300)
+  .selectAll("g")
   .data(scores)
   .enter()
-  .append("div")
+  .append("g")
+  .attr("transform", (d, i) => "translate(0, " + i * 33 + ")");
+
+bar
+  .append("rect")
+  .style("width", (d) => d.score)
+  .attr("fill", "pink")
+  .attr("class", "bar")
+  .on("click", () => console.log("BABY"));
+
+bar
+  .append("text")
+  .attr("y", 20)
   .text(function (d) {
     return d.name;
-  })
-  .style("width", (d) => d.score + "px")
-  .attr("class", "bar");
+  });
 
 // Selection
 let div = d3.select("div");
