@@ -28,7 +28,7 @@ svg
 
 // Create axis
 let yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
-let yAxis = d3.axisLeft(yScale);
+let yAxis = d3.axisLeft(yScale).ticks(10);
 svg.call(yAxis);
 
 // let scores = [
