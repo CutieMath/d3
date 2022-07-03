@@ -1,5 +1,5 @@
 // 3rd June
-let margin = { top: 30, right: 30, bottom: 30, left: 30 };
+let margin = { top: 30, right: 30, bottom: 60, left: 30 };
 let width = 425 - margin.left - margin.right;
 let height = 625 - margin.top - margin.bottom;
 
@@ -26,10 +26,24 @@ svg
   .style("fill", "pink")
   .style("stroke", "black");
 
-// Create axis
+// Create Y axis
 let yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
-let yAxis = d3.axisLeft(yScale).ticks(10);
+let yAxis = d3.axisLeft(yScale).ticks(10); // specify tick values use tickValues
 svg.call(yAxis);
+
+// Creat X axis
+let xScale = d3
+  .scaleTime()
+  .domain([new Date(2022, 0, 1), new Date(2022, 1, 1)])
+  .range([0, width]);
+
+let xAxis = d3
+  .axisBottom(xScale)
+  .ticks(5)
+  .tickSizeInner(10)
+  .tickSizeOuter(20)
+  .tickPadding(15);
+svg.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
 
 // let scores = [
 //   { name: "Yuxin", score: 100 },
