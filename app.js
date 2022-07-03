@@ -49,7 +49,9 @@ bar
   .style("width", (d) => d.score)
   .attr("fill", "pink")
   .attr("class", "bar")
-  .on("click", () => console.log("BABY"));
+  .on("mouseover", function () {
+    console.log(this);
+  });
 
 bar
   .append("text")
