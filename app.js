@@ -50,7 +50,10 @@ bar
   .attr("fill", "pink")
   .attr("class", "bar")
   .on("mouseover", function () {
-    console.log(this);
+    d3.select(this).classed("barOn", true);
+  })
+  .on("mouseout", function () {
+    d3.select(this).classed("barOn", false);
   });
 
 bar
