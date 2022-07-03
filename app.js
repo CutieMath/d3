@@ -1,81 +1,83 @@
-let scores = [
-  { name: "Yuxin", score: 100 },
-  { name: "Mimi", score: 100 },
-  { name: "Cindy", score: 91 },
-  { name: "David", score: 96 },
-  { name: "Byron", score: 100 },
-];
+// 3rd June
+let margin = { top: 25, right: 0, bottom: 25, left: 25 };
+let width = 425 - margin.left - margin.right;
+let height = 625 - margin.top - margin.bottom;
 
-// let update = d3
-//   .select(".chart")
-//   .selectAll("div")
-//   .data(scores, function (d) {
-//     return d ? d.name : this.innerText; //Check if the element already exists
-//   })
-//   .style("color", "blue");
-
-// let enter = update
-//   .enter()
-//   .append("div")
-//   .text(function (d) {
-//     return d.name;
-//   })
-//   .style("color", "green");
-
-// // remove redundent data
-// update.exit().remove();
-// // styling
-// update
-//   .merge(enter)
-//   .style("width", (d) => d.score + "px")
-//   .style("height", "50px")
-//   .style("background", "pink")
-//   .style("border", "1px solid black");
-
-// with svg
-var bar = d3
+let svg = d3
   .select(".chart")
   .append("svg")
-  .attr("width", 225)
-  .attr("height", 300)
-  .selectAll("g")
-  .data(scores)
-  .enter()
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
   .append("g")
-  .attr("transform", (d, i) => "translate(0, " + i * 33 + ")");
+  .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-function scaleBar(selection, scale) {
-  selection.style("transform", "scaleX(" + scale + ")");
-}
-
-function fade(selection, opacity) {
-  selection.style("fill-opacity", opacity);
-}
-
-function setFill(selection, color) {
-  selection.style("fill", color);
-}
-
-bar
+svg
   .append("rect")
-  .style("width", (d) => d.score)
-  .attr("fill", "pink")
-  .attr("class", "bar")
-  .on("mouseover", function (d, i, elements) {
-    d3.select(this).call(scaleBar, 2).call(setFill, "white");
-    d3.selectAll(elements).filter(":not(:hover)").call(fade, 0.5);
-  })
-  .on("mouseout", function (d, i, elements) {
-    d3.select(this).call(scaleBar, 1).call(setFill, "pink");
-    d3.selectAll(elements).call(fade, 1);
-  });
+  .attr("width", width / 2)
+  .attr("height", height)
+  .style("fill", "pink")
+  .style("stroke", "black");
 
-bar
-  .append("text")
-  .attr("y", 20)
-  .text(function (d) {
-    return d.name;
-  });
+svg
+  .append("rect")
+  .attr("x", width / 2)
+  .attr("width", width / 2)
+  .attr("height", height)
+  .style("fill", "pink")
+  .style("stroke", "black");
+
+// let scores = [
+//   { name: "Yuxin", score: 100 },
+//   { name: "Mimi", score: 100 },
+//   { name: "Cindy", score: 91 },
+//   { name: "David", score: 96 },
+//   { name: "Byron", score: 100 },
+// ];
+
+// with svg
+// var bar = d3
+//   .select(".chart")
+//   .append("svg")
+//   .attr("width", 225)
+//   .attr("height", 300)
+//   .selectAll("g")
+//   .data(scores)
+//   .enter()
+//   .append("g")
+//   .attr("transform", (d, i) => "translate(0, " + i * 33 + ")");
+
+// function scaleBar(selection, scale) {
+//   selection.style("transform", "scaleX(" + scale + ")");
+// }
+
+// function fade(selection, opacity) {
+//   selection.style("fill-opacity", opacity);
+// }
+
+// function setFill(selection, color) {
+//   selection.style("fill", color);
+// }
+
+// bar
+//   .append("rect")
+//   .style("width", (d) => d.score)
+//   .attr("fill", "pink")
+//   .attr("class", "bar")
+//   .on("mouseover", function (d, i, elements) {
+//     d3.select(this).call(scaleBar, 2).call(setFill, "white");
+//     d3.selectAll(elements).filter(":not(:hover)").call(fade, 0.5);
+//   })
+//   .on("mouseout", function (d, i, elements) {
+//     d3.select(this).call(scaleBar, 1).call(setFill, "pink");
+//     d3.selectAll(elements).call(fade, 1);
+//   });
+
+// bar
+//   .append("text")
+//   .attr("y", 20)
+//   .text(function (d) {
+//     return d.name;
+//   });
 
 // Selection
 let div = d3.select("div");
