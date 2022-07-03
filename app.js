@@ -52,17 +52,21 @@ function fade(selection, opacity) {
   selection.style("fill-opacity", opacity);
 }
 
+function setFill(selection, color) {
+  selection.style("fill", color);
+}
+
 bar
   .append("rect")
   .style("width", (d) => d.score)
   .attr("fill", "pink")
   .attr("class", "bar")
   .on("mouseover", function (d, i, elements) {
-    d3.select(this).call(scaleBar, 2);
+    d3.select(this).call(scaleBar, 2).call(setFill, "white");
     d3.selectAll(elements).filter(":not(:hover)").call(fade, 0.5);
   })
   .on("mouseout", function (d, i, elements) {
-    d3.select(this).call(scaleBar, 1);
+    d3.select(this).call(scaleBar, 1).call(setFill, "pink");
     d3.selectAll(elements).call(fade, 1);
   });
 
