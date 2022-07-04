@@ -13,15 +13,14 @@ let svg = d3
 
 svg
   .append("rect")
-  .attr("width", width / 2)
+  .attr("width", width)
   .attr("height", height)
   .style("fill", "pink")
   .style("stroke", "black");
 
 svg
   .append("rect")
-  .attr("x", width / 2)
-  .attr("width", width / 2)
+  .attr("width", width)
   .attr("height", height)
   .style("fill", "pink")
   .style("stroke", "black");
@@ -34,7 +33,7 @@ svg.call(yAxis);
 // Creat X axis
 let xScale = d3
   .scaleTime()
-  .domain([new Date(2022, 0, 1), new Date(2022, 1, 1)])
+  .domain([new Date(2022, 0, 1, 6), new Date(2022, 0, 1, 9)])
   .range([0, width]);
 
 let xAxis = d3
