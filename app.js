@@ -11,13 +11,14 @@ let svg = d3
   .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-svg
-  .append("rect")
-  .attr("width", width)
-  .attr("height", height)
-  .style("fill", "pink")
-  .style("stroke", "black");
-
+// dummy data
+var data = [
+  { score: 63, subject: "Mathematics" },
+  { score: 82, subject: "Geography" },
+  { score: 74, subject: "Spelling" },
+  { score: 97, subject: "Reading" },
+  { score: 52, subject: "Science" },
+];
 svg
   .append("rect")
   .attr("width", width)
@@ -32,8 +33,8 @@ svg.call(yAxis);
 
 // Creat X axis
 let xScale = d3
-  .scaleTime()
-  .domain([new Date(2022, 0, 1, 6), new Date(2022, 0, 1, 9)])
+  .scaleBand()
+  .domain(data.map((d) => d.subject))
   .range([0, width]);
 
 let xAxis = d3
@@ -43,6 +44,16 @@ let xAxis = d3
   .tickSizeOuter(20)
   .tickPadding(15);
 svg.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
+
+svg
+  .selectAll("rect")
+  .data(data)
+  .enter()
+  .append("rect")
+  .attr("x", (d) => xScale(d.subject))
+  .attr("y", (d) => yScale(d.score))
+  .attr("width", (d) => xScale.bandwidth())
+  .attr("height", (d) => height - yScale(d.score)); // inverse the y value
 
 // let scores = [
 //   { name: "Yuxin", score: 100 },
