@@ -40,7 +40,13 @@ let xScale = d3
   .range([0, width]);
 
 let xAxis = d3.axisBottom(xScale).ticks(5).tickPadding(15);
-svg.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
+svg
+  .append("g")
+  .attr("transform", `translate(0, ${height})`)
+  .call(xAxis)
+  .selectAll("text")
+  .style("text-anchor", "end")
+  .attr("transform", "rotate(-45)");
 
 svg
   .selectAll("rect")
