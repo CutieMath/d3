@@ -13,11 +13,11 @@ let svg = d3
 
 // dummy data
 var data = [
-  { score: 63, subject: "Mathematics" },
+  { score: 100, subject: "Reading" },
   { score: 82, subject: "Geography" },
   { score: 74, subject: "Spelling" },
-  { score: 97, subject: "Reading" },
-  { score: 52, subject: "Science" },
+  { score: 99, subject: "Mathematics" },
+  { score: 100, subject: "Science" },
 ];
 svg
   .append("rect")
@@ -34,15 +34,12 @@ svg.call(yAxis);
 // Creat X axis
 let xScale = d3
   .scaleBand()
+  .padding(0.1)
+  .paddingOuter(0.5)
   .domain(data.map((d) => d.subject))
   .range([0, width]);
 
-let xAxis = d3
-  .axisBottom(xScale)
-  .ticks(5)
-  .tickSizeInner(10)
-  .tickSizeOuter(20)
-  .tickPadding(15);
+let xAxis = d3.axisBottom(xScale).ticks(5).tickPadding(15);
 svg.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
 
 svg
@@ -121,7 +118,7 @@ let secondLink = d3
   .attr("href", "https://google.com")
   .style("color", "green")
   .text("Just changed text");
-console.log(secondLink.attr("href"));
+// console.log(secondLink.attr("href"));
 
 // Linear Scale
 let linearScale = d3.scaleLinear().domain([0, 100]).range([0, 600]).clamp(true);
