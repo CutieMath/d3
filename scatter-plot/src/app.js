@@ -39,19 +39,21 @@ d3.json("./data.json", function (err, data) {
     .data(data)
     .enter()
     .append("g")
-    .attr("class", "ball")
+    .attr("class", "ball") // apply the css class
     .attr("transform", (d) => {
       return `translate(${xScale(d.cost)}, ${yScale(d.expectancy)})`;
     });
 
+  // add circle into graphic container
   circles
     .append("circle")
     .attr("cx", 0)
     .attr("cy", 0)
-    .attr("r", (d) => rScale(d.population))
+    .attr("r", (d) => rScale(d.population)) // radius
     .style("fill-opacity", 0.5)
     .style("fill", "steelblue");
 
+  // append text element
   circles
     .append("text")
     .style("text-anchor", "middle")
