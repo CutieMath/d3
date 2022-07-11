@@ -1,49 +1,44 @@
-var margin = { top: 10, right: 20, bottom: 40, left: 30 };
-var width = 600 - margin.left - margin.right;
-var height = 600 - margin.top - margin.bottom;
+// set the dimensions and margins of the graph
+const margin = { top: 10, right: 30, bottom: 30, left: 60 },
+  width = 460 - margin.left - margin.right,
+  height = 400 - margin.top - margin.bottom;
 
-var svg = d3
-  .select(".chart")
+// append the svg object to the body of the page
+const svg = d3
+  .select("#my_dataviz")
   .append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
-  .call(responsivefy)
   .append("g")
-  .attr("transform", `translate( ${margin.left}, ${margin.top})`);
+  .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-let yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
-let yAxis = d3.axisLeft(yScale).ticks(10);
-svg.call(yAxis);
-
-let xScale = d3.scaleLinear().domain([100, 0]).range([height, 0]);
-let xAxis = d3.axisBottom(xScale);
-svg.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
-
-// Responsivefy Source Code
-function responsivefy(svg) {
-  // get container + svg aspect ratio
-  var container = d3.select(svg.node().parentNode),
-    width = parseInt(svg.style("width")),
-    height = parseInt(svg.style("height")),
-    aspect = width / height;
-
-  // add viewBox and preserveAspectRatio properties,
-  // and call resize so that svg resizes on inital page load
+//Read the data
+d3.csv(
+  "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv"
+).then(function (data) {
+  // Add X axis
+  const x = d3.scaleLinear().domain([0, 4000]).range([0, width]);
   svg
-    .attr("viewBox", "0 0 " + width + " " + height)
-    .attr("preserveAspectRatio", "xMinYMid")
-    .call(resize);
+    .append("g")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(x));
 
-  // to register multiple listeners for same event type,
-  // you need to add namespace, i.e., 'click.foo'
-  // necessary if you call invoke this function for multiple svgs
-  // api docs: https://github.com/mbostock/d3/wiki/Selections#on
-  d3.select(window).on("resize." + container.attr("id"), resize);
+  // Add Y axis
+  const y = d3.scaleLinear().domain([0, 500000]).range([height, 0]);
+  svg.append("g").call(d3.axisLeft(y));
 
-  // get width of container and resize svg to fit it
-  function resize() {
-    var targetWidth = parseInt(container.style("width"));
-    svg.attr("width", targetWidth);
-    svg.attr("height", Math.round(targetWidth / aspect));
-  }
-}
+  // Add dots
+  svg
+    .append("g")
+    .selectAll("dot")
+    .data(data)
+    .join("circle")
+    .attr("cx", function (d) {
+      return x(d.GrLivArea);
+    })
+    .attr("cy", function (d) {
+      return y(d.SalePrice);
+    })
+    .attr("r", 1.5)
+    .style("fill", "#69b3a2");
+});
