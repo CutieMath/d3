@@ -11,56 +11,7 @@ var svg = d3
   .append("g")
   .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
-d3.json("./data.json", function (err, data) {
-  var yScale = d3
-    .scaleLinear()
-    .domain(d3.extent(data, (d) => d.expectancy))
-    .range([height, 0])
-    .nice();
-  var yAxis = d3.axisLeft(yScale);
-  svg.call(yAxis);
-
-  var xScale = d3
-    .scaleLinear()
-    .domain(d3.extent(data, (d) => d.cost))
-    .range([0, width])
-    .nice();
-
-  var xAxis = d3.axisBottom(xScale).ticks(5);
-  svg.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
-
-  var rScale = d3
-    .scaleSqrt()
-    .domain([0, d3.max(data, (d) => d.population)])
-    .range([0, 40]);
-
-  var circles = svg
-    .selectAll(".ball")
-    .data(data)
-    .enter()
-    .append("g")
-    .attr("class", "ball") // apply the css class
-    .attr("transform", (d) => {
-      return `translate(${xScale(d.cost)}, ${yScale(d.expectancy)})`;
-    });
-
-  // add circle into graphic container
-  circles
-    .append("circle")
-    .attr("cx", 0)
-    .attr("cy", 0)
-    .attr("r", (d) => rScale(d.population)) // radius
-    .style("fill-opacity", 0.5)
-    .style("fill", "steelblue");
-
-  // append text element
-  circles
-    .append("text")
-    .style("text-anchor", "middle")
-    .style("fill", "black")
-    .attr("y", 4)
-    .text((d) => d.code);
-});
+d3.json("./data.json", function (err, data) {});
 
 function responsivefy(svg) {
   // get container + svg aspect ratio
