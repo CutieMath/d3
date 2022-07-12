@@ -49,7 +49,8 @@ d3.json("./data.json", function (err, data) {
   let line = d3
     .line()
     .x((d) => xScale(d.date))
-    .y((d) => yScale(d.close));
+    .y((d) => yScale(d.close))
+    .curve(d3.curveCatmullRom.alpha(0.5));
   svg
     .selectAll(".line")
     .data(data)
