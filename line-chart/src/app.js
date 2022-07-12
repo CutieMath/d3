@@ -56,7 +56,10 @@ d3.json("./data.json", function (err, data) {
     .enter()
     .append("path")
     .attr("class", "line")
-    .attr("d", (d) => line(d.values));
+    .attr("d", (d) => line(d.values))
+    .style("stroke", (d, i) => ["blue", "orange"][i])
+    .style("stroke-width", 2)
+    .style("fill", "none");
 });
 
 function responsivefy(svg) {
