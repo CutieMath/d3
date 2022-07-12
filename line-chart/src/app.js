@@ -44,6 +44,19 @@ d3.json("./data.json", function (err, data) {
     ])
     .range([height, 0]); // larger at the top
   svg.append("g").call(d3.axisLeft(yScale));
+
+  // Create lines for line chart
+  let line = d3
+    .line()
+    .x((d) => xScale(d.date))
+    .y((d) => yScale(d.close));
+  svg
+    .selectAll(".line")
+    .data(data)
+    .enter()
+    .append("path")
+    .attr("class", "line")
+    .attr("d", (d) => line(d.values));
 });
 
 function responsivefy(svg) {
