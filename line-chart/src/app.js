@@ -9,9 +9,33 @@ var svg = d3
   .attr("height", height + margin.top + margin.bottom)
   .call(responsivefy)
   .append("g")
-  .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+  .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-d3.json("./data.json", function (err, data) {});
+d3.json("./data.json", function (err, data) {
+  // get the date
+  let parseTime = d3.timeParse("%Y/%m/%d");
+  data.forEach((companyTicker) => {
+    companyTicker.values.forEach((d) => {
+      d.date = parseTime(d.date);
+      d.close = +d.close;
+    });
+  });
+
+  // Draw x Axis
+  let xScale = d3
+    .scaleTime()
+    .domain([
+      // get the smallest and lagest from the data set
+      d3.min(data, (co) => d3.min(co.values, (d) => d.date)),
+      d3.max(data, (co) => d3.max(co.values, (d) => d.date)),
+    ])
+    .range([0, width]);
+
+  svg
+    .append("g")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(xScale));
+});
 
 function responsivefy(svg) {
   // get container + svg aspect ratio
