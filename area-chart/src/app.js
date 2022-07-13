@@ -27,11 +27,19 @@ d3.json("./data.json", function (err, data) {
       d3.min(data, (co) => d3.max(co.values, (d) => d.date)),
     ])
     .range([0, width]);
-
   svg
     .append("g")
     .attr("transform", `translate(0, ${height})`)
     .call(d3.axisBottom(xScale).ticks(5));
+
+  let yScale = d3
+    .scaleLinear()
+    .domain([
+      d3.min(data, (co) => d3.min(co.values, (d) => d.close)),
+      d3.min(data, (co) => d3.max(co.values, (d) => d.close)),
+    ])
+    .range([height, 0]);
+  svg.append("g").call(d3.axisLeft(yScale));
 });
 
 function responsivefy(svg) {
