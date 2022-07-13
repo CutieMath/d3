@@ -11,7 +11,28 @@ var svg = d3
   .append("g")
   .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
-d3.json("./data.json", function (err, data) {});
+d3.json("./data.json", function (err, data) {
+  let parseTime = d3.timeParse("%Y/%m/%d");
+  data.forEach((company) => {
+    company.values.forEach((d) => {
+      d.date = parseTime(d.date);
+      d.clost = +d.close;
+    });
+  });
+
+  let xScale = d3
+    .scaleTime()
+    .domain([
+      d3.min(data, (co) => d3.min(co.values, (d) => d.date)),
+      d3.min(data, (co) => d3.max(co.values, (d) => d.date)),
+    ])
+    .range([0, width]);
+
+  svg
+    .append("g")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(xScale).ticks(5));
+});
 
 function responsivefy(svg) {
   // get container + svg aspect ratio
