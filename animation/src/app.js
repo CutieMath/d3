@@ -1,7 +1,11 @@
 d3.select("#block")
   .transition()
-  .duration(500)
+  .duration(300)
   .delay(750)
-  .ease(d3.easeCubicOut)
+  .ease(d3.easeBounceOut)
   .style("width", "400px")
+  .transition()
+  .duration(300)
+  .delay(750)
+  .ease(d3.easeBounceOut)
   .style("height", "600px");
