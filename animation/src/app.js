@@ -1,11 +1,12 @@
 d3.select("#block")
   .transition()
-  .duration(300)
+  .duration(500)
   .delay(750)
   .ease(d3.easeBounceOut)
   .style("width", "400px")
   .transition()
-  .duration(300)
+  .duration(500)
   .delay(750)
   .ease(d3.easeBounceOut)
-  .style("height", "600px");
+  .style("height", "600px")
+  .style("background-color", "pink");
