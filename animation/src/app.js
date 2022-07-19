@@ -32,6 +32,22 @@ svg
 var yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
 svg.append("g").call(d3.axisLeft(yScale));
 
+function render(subject = "science") {
+  let update = svg.selectAll("rect").data(data.filter((d) => d[subject]));
+
+  update.exit().remove();
+  let enter = update.enter().append("rect");
+
+  update
+    .merge(enter)
+    .attr("x", (d) => xScale(d.name))
+    .attr("y", (d) => yScale(d[subject]))
+    .attr("width", (d) => xScale.bandwidth())
+    .attr("height", (d) => height - yScale(d[subject]));
+}
+
+render();
+
 function responsivefy(svg) {
   // get container + svg aspect ratio
   var container = d3.select(svg.node().parentNode),
