@@ -33,16 +33,31 @@ var yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
 svg.append("g").call(d3.axisLeft(yScale));
 
 function render(subject = "science") {
-  let update = svg.selectAll("rect").data(data.filter((d) => d[subject]));
+  // add animation
+  let t = d3.transition().duration(1000);
 
-  update.exit().remove();
-  let enter = update.enter().append("rect");
+  let update = svg.selectAll("rect").data(
+    data.filter((d) => d[subject]),
+    (d) => d.name
+  );
+
+  update.exit().transition(t).attr("y", height).attr("height", 0).remove();
+  update
+    .transition(t)
+    .delay(1000)
+    .attr("y", (d) => yScale(d[subject]))
+    .attr("height", (d) => height - yScale(d[subject]));
 
   update
-    .merge(enter)
+    .enter()
+    .append("rect")
+    .attr("y", height)
+    .attr("height", 0) // new rect start from the bottom
     .attr("x", (d) => xScale(d.name))
-    .attr("y", (d) => yScale(d[subject]))
     .attr("width", (d) => xScale.bandwidth())
+    .transition(t)
+    .delay(update.exit().size() ? 2000 : 0)
+    .attr("y", (d) => yScale(d[subject]))
     .attr("height", (d) => height - yScale(d[subject]));
 }
 
