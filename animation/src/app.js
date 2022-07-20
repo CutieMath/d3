@@ -41,7 +41,9 @@ function render(subject = "science") {
     (d) => d.name
   );
 
+  // handle DOM element that's not in the provided data object
   update.exit().transition(t).attr("y", height).attr("height", 0).remove();
+
   update
     .transition(t)
     .delay(1000)
