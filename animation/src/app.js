@@ -41,15 +41,24 @@ function render(subject = "science") {
     (d) => d.name
   );
 
-  // handle DOM element that's not in the provided data object
+  // **************
+  // Slide out data
+  // **************
+  // use Exit to handle DOM element that's not in the provided data object
   update.exit().transition(t).attr("y", height).attr("height", 0).remove();
 
+  // **************
+  // Update data
+  // **************
   update
     .transition(t)
     .delay(1000)
     .attr("y", (d) => yScale(d[subject]))
     .attr("height", (d) => height - yScale(d[subject]));
 
+  // **************
+  // Slide in data
+  // **************
   update
     .enter()
     .append("rect")
