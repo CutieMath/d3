@@ -2,7 +2,7 @@ var data = [
   { name: "Yuxin", maths: 98, science: 100, language: 99 },
   { name: "Billy", maths: null, science: 34, language: 85 },
   { name: "Cindy", maths: 86, science: 48, language: null },
-  { name: "David", maths: 44, science: null, language: 65 },
+  { name: "David", maths: 144, science: null, language: 65 },
   { name: "Emily", maths: 59, science: 73, language: 29 },
 ];
 
@@ -30,7 +30,7 @@ svg
   .call(d3.axisBottom(xScale));
 
 var yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
-svg.append("g").call(d3.axisLeft(yScale));
+var yAxis = svg.append("g").call(d3.axisLeft(yScale));
 
 function render(subject = "science") {
   // add animation
@@ -46,6 +46,11 @@ function render(subject = "science") {
   // **************
   // use Exit to handle DOM element that's not in the provided data object
   update.exit().transition(t).attr("y", height).attr("height", 0).remove();
+
+  // If a score is above the chart, update the chart
+  yScale.domain([0, d3.max(data, (d) => d[subject])]);
+  // Animate the axis update:
+  yAxis.transition(t).delay(1000).call(d3.axisLeft(yScale));
 
   // **************
   // Update data
